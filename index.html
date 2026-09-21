@@ -1,1 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#141d33">
+<title>日本の音階 ― 陰音階・陽音階・沖縄音階を音で確かめよう</title>
+<meta name="description" content="日本の五音音階(陰音階・陽音階・沖縄音階)を、音を出して確かめ、メロディーをつくって再生できる高校音楽の教材アプリです。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-scale="in">
 
+<div class="backdrop" aria-hidden="true"></div>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="brand">
+      <span class="seal" aria-hidden="true">音</span>
+      <h1 class="title">日本の音階</h1>
+    </div>
+
+    <div class="lead">
+      <div class="deco" aria-hidden="true">
+        <!-- 陰:月と桜 -->
+        <svg class="deco-in" viewBox="0 0 200 200">
+          <circle cx="100" cy="98" r="58" fill="#f1ecd9"/>
+          <circle cx="82" cy="84" r="11" fill="#e3dcc2"/>
+          <circle cx="118" cy="112" r="7" fill="#e3dcc2"/>
+          <rect x="20" y="112" width="150" height="6" rx="3" style="fill:var(--bg)" opacity=".6"/>
+          <rect x="50" y="128" width="130" height="5" rx="2.5" style="fill:var(--bg)" opacity=".5"/>
+          <g fill="#eaa6b4" opacity=".85">
+            <ellipse cx="34" cy="40" rx="7" ry="4" transform="rotate(-30 34 40)"/>
+            <ellipse cx="172" cy="150" rx="7" ry="4" transform="rotate(25 172 150)"/>
+            <ellipse cx="150" cy="30" rx="6" ry="3.5" transform="rotate(50 150 30)"/>
+          </g>
+        </svg>
+        <!-- 陽:朝日と霞 -->
+        <svg class="deco-yo" viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="76" fill="none" stroke="#b8892b" stroke-width="1.5"/>
+          <circle cx="100" cy="100" r="58" fill="#b92a16"/>
+          <rect x="10" y="118" width="180" height="8" rx="4" style="fill:var(--bg)"/>
+          <rect x="30" y="136" width="150" height="6" rx="3" style="fill:var(--bg)"/>
+          <rect x="0" y="152" width="120" height="5" rx="2.5" style="fill:var(--bg)"/>
+        </svg>
+        <!-- 沖縄:ハイビスカス -->
+        <svg class="deco-ryukyu" viewBox="0 0 200 200">
+          <defs>
+            <path id="petal" d="M0 0 C-30 -18 -38 -66 -8 -84 C8 -92 32 -78 28 -50 C25 -30 12 -12 0 0 Z"/>
+          </defs>
+          <ellipse cx="38" cy="168" rx="38" ry="12" fill="#0d8f6f" transform="rotate(-24 38 168)"/>
+          <ellipse cx="164" cy="170" rx="34" ry="11" fill="#0a7a5f" transform="rotate(22 164 170)"/>
+          <g transform="translate(100 112)">
+            <g fill="#e0304f">
+              <use href="#petal"/>
+              <use href="#petal" transform="rotate(72)"/>
+              <use href="#petal" transform="rotate(144)"/>
+              <use href="#petal" transform="rotate(216)"/>
+              <use href="#petal" transform="rotate(288)"/>
+            </g>
+            <g fill="#a80f2e" opacity=".5" transform="scale(.42)">
+              <use href="#petal"/>
+              <use href="#petal" transform="rotate(72)"/>
+              <use href="#petal" transform="rotate(144)"/>
+              <use href="#petal" transform="rotate(216)"/>
+              <use href="#petal" transform="rotate(288)"/>
+            </g>
+            <path d="M0 0 C6 -20 20 -40 36 -54" stroke="#f7b500" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <g fill="#ffbe0b">
+              <circle cx="36" cy="-54" r="4.5"/>
+              <circle cx="29" cy="-60" r="3.5"/>
+              <circle cx="43" cy="-47" r="3.5"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <p class="lead-copy">音を出して確かめ、五つの音でメロディーをつくろう。</p>
+
+      <nav class="tabs" aria-label="音階をえらぶ">
+        <button type="button" class="tab" data-scale="in" aria-pressed="true">
+          <span class="tab-name">陰音階</span><span class="tab-kana">いんおんかい</span>
+        </button>
+        <button type="button" class="tab" data-scale="yo" aria-pressed="false">
+          <span class="tab-name">陽音階</span><span class="tab-kana">ようおんかい</span>
+        </button>
+        <button type="button" class="tab" data-scale="ryukyu" aria-pressed="false">
+          <span class="tab-name">沖縄音階</span><span class="tab-kana">おきなわおんかい</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="settings" aria-label="表示と音の設定">
+      <label class="field">
+        <span class="field-label">主音(はじまりの音)</span>
+        <select id="tonic"></select>
+      </label>
+      <label class="field">
+        <span class="field-label">音名の表示</span>
+        <select id="notation">
+          <option value="solfege">ドレミ</option>
+          <option value="abc">CDE(英語音名)</option>
+          <option value="iroha">ハニホ(日本音名)</option>
+        </select>
+      </label>
+      <fieldset class="field seg-field">
+        <legend class="field-label">音色</legend>
+        <div class="seg">
+          <label><input type="radio" name="timbre" value="koto"><span>琴</span></label>
+          <label><input type="radio" name="timbre" value="shamisen"><span>三線</span></label>
+          <label><input type="radio" name="timbre" value="flute"><span>笛</span></label>
+        </div>
+      </fieldset>
+    </section>
+
+    <!-- 一 -->
+    <section class="panel" aria-labelledby="h-know">
+      <div class="panel-head">
+        <span class="step" aria-hidden="true">一</span>
+        <h2 id="h-know">音階を知る・聴く</h2>
+      </div>
+
+      <div class="know">
+        <div class="know-name">
+          <p class="scale-name" id="scale-name"></p>
+          <p class="scale-kana" id="scale-kana"></p>
+          <p class="scale-alias" id="scale-alias"></p>
+        </div>
+        <div class="know-text">
+          <p id="scale-feel"></p>
+          <p class="note" id="scale-extra"></p>
+        </div>
+      </div>
+
+      <p class="sub-head">1オクターブ(12の半音)のうち、この音階が使う音</p>
+      <div class="ruler" id="ruler" role="group" aria-label="主音から1オクターブ上までの12の半音。色のついた音がこの音階の音"></div>
+      <div class="pattern" id="pattern" aria-label="音の並びと音の間隔"></div>
+
+      <div class="actions">
+        <button type="button" class="btn primary" id="btn-up">のぼる</button>
+        <button type="button" class="btn" id="btn-down">くだる</button>
+        <button type="button" class="btn" id="btn-updown">のぼって くだる</button>
+        <label class="check">
+          <input type="checkbox" id="drone">
+          <span>主音をのばして鳴らす(ドローン)</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- 二 -->
+    <section class="panel" aria-labelledby="h-play">
+      <div class="panel-head">
+        <span class="step" aria-hidden="true">二</span>
+        <h2 id="h-play">弦をはじいて確かめる</h2>
+      </div>
+      <p class="help">弦をタップ(クリック)すると音が鳴ります。キーボードの 1〜6 でも鳴らせます。左から右へ、音が高くなります。</p>
+      <div class="koto" id="koto" role="group" aria-label="この音階の6本の弦"></div>
+    </section>
+
+    <!-- 三 -->
+    <section class="panel" aria-labelledby="h-make">
+      <div class="panel-head">
+        <span class="step" aria-hidden="true">三</span>
+        <h2 id="h-make">メロディーをつくる</h2>
+      </div>
+      <p class="help">四角をおすと、その拍にその音が入ります(1拍に1つの音)。もう一度おすと消えます。音の長さは下でえらべます。</p>
+
+      <div class="make-controls">
+        <fieldset class="field seg-field">
+          <legend class="field-label">音の長さ</legend>
+          <div class="seg">
+            <label><input type="radio" name="tool" value="1"><span>♪ 八分(1マス)</span></label>
+            <label><input type="radio" name="tool" value="2" checked><span>♩ 四分(2マス)</span></label>
+            <label><input type="radio" name="tool" value="4"><span>二分(4マス)</span></label>
+          </div>
+        </fieldset>
+        <label class="field">
+          <span class="field-label">長さ</span>
+          <select id="steps">
+            <option value="8">1小節(8マス)</option>
+            <option value="16" selected>2小節(16マス)</option>
+            <option value="32">4小節(32マス)</option>
+          </select>
+        </label>
+        <label class="field field-range">
+          <span class="field-label">テンポ <output id="bpm-out">88</output></span>
+          <input type="range" id="bpm" min="50" max="160" step="2" value="88">
+        </label>
+      </div>
+
+      <div class="grid-wrap" id="gridwrap">
+        <div class="grid" id="grid" role="group" aria-label="メロディーを入力する表。上ほど高い音"></div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn primary" id="btn-play">さいせい</button>
+        <label class="check">
+          <input type="checkbox" id="loop">
+          <span>くり返す</span>
+        </label>
+        <button type="button" class="btn" id="btn-random">おまかせでつくる</button>
+        <button type="button" class="btn" id="btn-clear">ぜんぶ消す</button>
+        <button type="button" class="btn" id="btn-share">メロディーのリンクをコピー</button>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+
+      <ul class="tips">
+        <li>色のついた行が「主音」です。はじめと終わりを主音にすると、まとまりのある旋律になります。</li>
+        <li>音階を切りかえても、メロディーの並び(音階の何番目の音か)はそのままです。同じ並びが、音階によってどう変わるか聴き比べてみましょう。</li>
+        <li>リンクをコピーして送ると、つくったメロディーを友だちや先生に見せられます。</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <p>音はすべてブラウザの中でつくっています。ネットワーク接続は文字のデザイン(Webフォント)の読み込みだけに使います。</p>
+    <div class="foot-band" aria-hidden="true"></div>
+  </footer>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
